@@ -1,21 +1,28 @@
 # Contains the logic for checking guesses and giving feedback
 module Checks
   def game_over?(code, guess)
-    code == guess
+    code.join == guess
   end
 
   def feedback(code, guess)
-    if game_over?(code, guess)
-      # End the game
-    else
-      # Provide Feedback
+    # Provide Feedback
+    feedback_string = ''
+    4.times do |num|
+      if code.include?(guess[num])
+        if code[num] == guess[num]
+          feedback_string += 'B'
+        else
+          feedback_string += 'W'
+        end
+      end
     end
+    feedback_string
   end
 end
 
 # Contains the logic for playing as the Code Creator
 class CodeCreator
-  include Checks
+  extend Checks
   def self.play
 
   end
@@ -23,7 +30,7 @@ end
 
 # Contains the logic for playing as the Code Breaker
 class CodeBreaker
-  include Checks
+  extend Checks
   def self.introduction
     puts 'The Mastermind has generated a random 4 letter code!'
     sleep(3)
@@ -49,7 +56,21 @@ class CodeBreaker
 
   def self.play
     code = 4.times.map { %w[R B G Y O P].sample }
-    introduction
+    p code
+    # introduction
+    round_count = 0
+    while round_count < 12
+      puts 'Please enter your guess'
+      guess = gets.chomp
+      break if game_over?(code, guess)
+
+      puts feedback(code, guess)
+    end
+    if round_count < 12
+      puts "#{guess} was correct! You win!"
+    else
+      puts 'You reached the maximum round count. You lose'
+    end
   end
 end
 
