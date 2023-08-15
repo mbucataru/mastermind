@@ -1,18 +1,35 @@
 # Contains the logic for checking guesses and giving feedback
 module Checks
+  def game_over?(code, guess)
+    code == guess
+  end
 
+  def feedback(code, guess)
+    if game_over?(code, guess)
+      # End the game
+    else
+      # Provide Feedback
+    end
+  end
 end
 
-# Contains the logic for creating the code
+# Contains the logic for playing as the Code Creator
 class CodeCreator
+  include Checks
+  def self.play
 
+  end
 end
 
-# Contains the logic for breaking the code
+# Contains the logic for playing as the Code Breaker
 class CodeBreaker
-
+  include Checks
+  def self.play
+    code = 4.times.map { %w[R B G Y O P].sample }
+  end
 end
 
+# Includes the logic for the interface (main will call Game.play)
 class Game
   # Flow of game:
   #   Create a code - Ex: Red, Red, Blue, Green
