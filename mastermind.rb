@@ -20,24 +20,14 @@ module Checks
   end
 end
 
-# Contains the logic for playing as the Code Creator
-class CodeCreator
-  extend Checks
-  def self.play
-
-  end
-end
-
 # Contains the logic for playing as the Code Breaker
-class CodeBreaker
+class Game
   extend Checks
   def self.introduction
     puts 'The Mastermind has generated a random 4 letter code!'
     sleep(3)
     puts 'Your job is to crack this code within 12 guesses'
     sleep(3)
-    puts 'The valid colors are R B G Y O P'
-    sleep(2)
     puts 'To make a guess, type the four colors you want to choose, no spaces'
     sleep(4)
     puts 'For example: YGRB'
@@ -60,6 +50,8 @@ class CodeBreaker
     # introduction
     round_count = 0
     while round_count < 12
+      puts 'The valid colors are R B G Y O P'
+      sleep(2)
       puts 'Please enter your guess'
       guess = gets.chomp
       break if game_over?(code, guess)
@@ -75,16 +67,5 @@ class CodeBreaker
   end
 end
 
-# Includes the logic for the interface (main will call Game.play)
-class Game
-  # Flow of game:
-  #   Create a code - Ex: Red, Red, Blue, Green
-  #   Flow of round:
-  #     Guess Code - Ex: Red, Red, Green, Yellow
-  #     Provide Feedback: 1 Black Peg for every perfect guess, 1 White for
-  #     a guess that was the correct color but in the wrong spot
-  #     Feedback here: 2 Black (for the matching Red), 1 White
-  #   Repeat until the code is broken
-end
 
-CodeBreaker.play
+Game.play
