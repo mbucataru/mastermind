@@ -65,6 +65,7 @@ class CodeBreaker
       break if game_over?(code, guess)
 
       puts feedback(code, guess)
+      round_count += 1
     end
     if round_count < 12
       puts "#{guess} was correct! You win!"
